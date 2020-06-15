@@ -6,70 +6,70 @@ if ($_POST) {
     /* Llamamos los modelos SQL */
     require("../modelos/modelos.php");
 
-    $nombre = $_POST['key'];
-    $puesto = $_POST['puesto'];
-    $depto = $_POST['depto'];
-    $empresa  = $_POST['empresa'];
+    $_SESSION['nombre'] = $_POST['key'];
+    $_SESSION['puesto'] = $_POST['puesto'];
+    $_SESSION['depto'] = $_POST['depto'];
+    $_SESSION['empresa'] = $_POST['empresa'];
 
     /* FIEBRE */
    if (isset($_POST['fiebre'])) {
-       $fiebre = "Tiene Fiebre";
+       $_SESSION['fiebre'] = "Tiene Fiebre";
    } else{
-       $fiebre = "No tiene fiebre";
+       $_SESSION['fiebre'] = "No tiene fiebre";
    }
    /* TOS */
     if (isset($_POST['tos'])) {
-        $tos = "Tiene Tos";
+        $_SESSION['tos'] = "Tiene Tos";
     } else{
-        $tos = "No tiene Tos";
+        $_SESSION['tos'] = "No tiene Tos";
     }
     /* ESTORNUDOS */
     if (isset($_POST['estornudos'])) {
-        $estornudos ="Tiene estornudos";
+        $_SESSION['estornudos'] ="Tiene estornudos";
     } else{
-        $estornudos ="No tiene estornudos";
+        $_SESSION['estornudos'] ="No tiene estornudos";
     }
     /* DOLOR DE CABEZA */
     if (isset($_POST['dcabeza'])) {
-        $dcabeza ="Le duele la cabeza";
+        $_SESSION['dcabeza'] ="Le duele la cabeza";
     } else{
-        $dcabeza ="No le duele la cabeza";
+        $_SESSION['dcabeza'] ="No le duele la cabeza";
     }
     /* DIARREA */
     if (isset($_POST['diarrea'])) {
-        $diarrea ="Tiene diarrea";
+        $_SESSION['diarrea'] ="Tiene diarrea";
     } else{
-        $diarrea ="No tiene diarrea";
+        $_SESSION['diarrea'] ="No tiene diarrea";
     }
     /* VOMITO */
     if (isset($_POST['vomito'])) {
-        $vomito ="Tiene vomito";
+        $_SESSION['vomito'] ="Tiene vomito";
     } else{
-        $vomito ="No tiene vomito";
+        $_SESSION['vomito'] ="No tiene vomito";
     }
     /* CALOSFRIOS */
     if (isset($_POST['calosfrios'])) {
-        $calosfrios ="Tiene calosfrios";
+        $_SESSION['calosfrios'] ="Tiene calosfrios";
     } else{
-        $calosfrios ="No tiene calosfrios";
+        $_SESSION['calosfrios'] ="No tiene calosfrios";
     }
     /* DOLOR ABDOMINAL*/
     if (isset($_POST['dabdominal'])) {
-        $dabdominal ="Tiene dolor abdominal";
+        $_SESSION['dabdominal'] ="Tiene dolor abdominal";
     } else{
-        $dabdominal ="No tiene dolor abdominal";
+        $_SESSION['dabdominal'] ="No tiene dolor abdominal";
     }
     /* MALESTAR GENERAL*/
     if (isset($_POST['mgeneral'])) {
-        $mgeneral ="Tiene malestar geneal";
+        $_SESSION['mgeneral'] ="Tiene malestar geneal";
     } else{
-        $mgeneral ="No tiene malestar general";
+        $_SESSION['mgeneral'] ="No tiene malestar general";
     }
     /* DIFICULTAD PARA RESPIRAR*/
     if (isset($_POST['drespirar'])) {
-        $drespirar ="Tiene dificultad para respirar";
+        $_SESSION['drespirar'] ="Tiene dificultad para respirar";
     } else{
-        $drespirar ="No tiene dificultad para respirar";
+        $_SESSION['drespirar'] ="No tiene dificultad para respirar";
     }
 
     /* Si se seleccionan las 4 enfermedades graves o mas , mandamos al form de factores de riesgo. */
@@ -88,7 +88,7 @@ if ($_POST) {
         $vih = "No requerido";
         
         /* Llamamos la funcion saveNormal() del archivo modelos.php, y le pasamos todos los valores del formulario */
-        saveNormal($nombre,$puesto,$depto,$empresa,$fiebre,$tos,$estornudos,$dcabeza,$diarrea,$vomito,$calosfrios,$dabdominal,$mgeneral,$drespirar,$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih);
+        saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih);
         /* Redireccionamos al mensaje de noCovid */
         header('Location:nocovid.php');
     }
