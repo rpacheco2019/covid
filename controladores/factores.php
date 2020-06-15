@@ -61,7 +61,9 @@ if($_POST){
         $vih = "No tiene VIH";
     }
 
-    saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih);
+    $estatus = "RIESGO" ;
+
+    saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih,$estatus);
     header('Location:covid.php');
 
 }else{

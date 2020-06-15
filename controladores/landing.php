@@ -2,6 +2,12 @@
 session_start();
 /* Se esta posteando, recogemos todo y analizamos los checkbox */
 if ($_POST) {
+    
+    /* Ciclamos el FORM si vienen campos vacios */
+    if (empty($_POST['key']) || empty($_POST['puesto']) || empty($_POST['depto']) || empty($_POST['empresa'])) {
+        header('Location:landing.php');
+        die();
+    } 
 
     /* Llamamos los modelos SQL */
     require("../modelos/modelos.php");
@@ -13,63 +19,63 @@ if ($_POST) {
 
     /* FIEBRE */
    if (isset($_POST['fiebre'])) {
-       $_SESSION['fiebre'] = "Tiene Fiebre";
+       $_SESSION['fiebre'] = "SI";
    } else{
-       $_SESSION['fiebre'] = "No tiene fiebre";
+       $_SESSION['fiebre'] = "NO";
    }
    /* TOS */
     if (isset($_POST['tos'])) {
-        $_SESSION['tos'] = "Tiene Tos";
+        $_SESSION['tos'] = "SI";
     } else{
-        $_SESSION['tos'] = "No tiene Tos";
+        $_SESSION['tos'] = "NO";
     }
     /* ESTORNUDOS */
     if (isset($_POST['estornudos'])) {
-        $_SESSION['estornudos'] ="Tiene estornudos";
+        $_SESSION['estornudos'] ="SI";
     } else{
-        $_SESSION['estornudos'] ="No tiene estornudos";
+        $_SESSION['estornudos'] ="NO";
     }
     /* DOLOR DE CABEZA */
     if (isset($_POST['dcabeza'])) {
-        $_SESSION['dcabeza'] ="Le duele la cabeza";
+        $_SESSION['dcabeza'] ="SI";
     } else{
-        $_SESSION['dcabeza'] ="No le duele la cabeza";
+        $_SESSION['dcabeza'] ="NO";
     }
     /* DIARREA */
     if (isset($_POST['diarrea'])) {
-        $_SESSION['diarrea'] ="Tiene diarrea";
+        $_SESSION['diarrea'] ="SI";
     } else{
-        $_SESSION['diarrea'] ="No tiene diarrea";
+        $_SESSION['diarrea'] ="NO";
     }
     /* VOMITO */
     if (isset($_POST['vomito'])) {
-        $_SESSION['vomito'] ="Tiene vomito";
+        $_SESSION['vomito'] ="SI";
     } else{
-        $_SESSION['vomito'] ="No tiene vomito";
+        $_SESSION['vomito'] ="NO";
     }
     /* CALOSFRIOS */
     if (isset($_POST['calosfrios'])) {
-        $_SESSION['calosfrios'] ="Tiene calosfrios";
+        $_SESSION['calosfrios'] ="SI";
     } else{
-        $_SESSION['calosfrios'] ="No tiene calosfrios";
+        $_SESSION['calosfrios'] ="NO";
     }
     /* DOLOR ABDOMINAL*/
     if (isset($_POST['dabdominal'])) {
-        $_SESSION['dabdominal'] ="Tiene dolor abdominal";
+        $_SESSION['dabdominal'] ="SI";
     } else{
-        $_SESSION['dabdominal'] ="No tiene dolor abdominal";
+        $_SESSION['dabdominal'] ="NO";
     }
     /* MALESTAR GENERAL*/
     if (isset($_POST['mgeneral'])) {
-        $_SESSION['mgeneral'] ="Tiene malestar geneal";
+        $_SESSION['mgeneral'] ="SI";
     } else{
-        $_SESSION['mgeneral'] ="No tiene malestar general";
+        $_SESSION['mgeneral'] ="NO";
     }
     /* DIFICULTAD PARA RESPIRAR*/
     if (isset($_POST['drespirar'])) {
-        $_SESSION['drespirar'] ="Tiene dificultad para respirar";
+        $_SESSION['drespirar'] ="SI";
     } else{
-        $_SESSION['drespirar'] ="No tiene dificultad para respirar";
+        $_SESSION['drespirar'] ="NO";
     }
 
     /* Si se seleccionan las 4 enfermedades graves o mas , mandamos al form de factores de riesgo. */
@@ -78,17 +84,24 @@ if ($_POST) {
     }else{/* Si no tiene las 4 enfermedades, lo mandamos al mensaje No Covid */
 
         /* Al no se necesarias los factores de riesgo puesto que no tiene las 4 enfermedades, las ponemos como no requeridas */
-        $diabetes = "No requerido";
-        $palta = "No requerido";
-        $ecorazon = "No requerido";
-        $erenal = "No requerido";
-        $epulmonar = "No requerido";
-        $cancer = "No requerido";
-        $inmuno = "No requerido";
-        $vih = "No requerido";
+        $diabetes = "No aplica";
+        $palta = "No aplica";
+        $ecorazon = "No aplica";
+        $erenal = "No aplica";
+        $epulmonar = "No aplica";
+        $cancer = "No aplica";
+        $inmuno = "No aplica";
+        $vih = "No aplica";
+
+        /* Evaluamos si esta sano o enfermo sin riesgo */
+        if ($_SESSION['fiebre'] == "SI" || $_SESSION['tos'] == "SI" || $_SESSION['estornudos'] == "SI" || $_SESSION['dcabeza'] == "SI" || $_SESSION['diarrea'] == "SI" || $_SESSION['vomito'] == "SI" || $_SESSION['calosfrios'] == "SI" || $_SESSION['dabdominal'] == "SI" || $_SESSION['mgeneral'] == "SI" || $_SESSION['drespirar'] == "SI") {
+            $estatus = "ENFERMO";
+        }else{
+            $estatus = "NORMAL";
+        }
         
         /* Llamamos la funcion saveNormal() del archivo modelos.php, y le pasamos todos los valores del formulario */
-        saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih);
+        saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih,$estatus);
         /* Redireccionamos al mensaje de noCovid */
         header('Location:nocovid.php');
     }
