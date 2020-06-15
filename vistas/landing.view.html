@@ -7,91 +7,108 @@
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
     <title>Encuesta GP1</title>
 </head>
 <body>
     <!-- Formulario principal del primer cuestionario -->
     <div class="mx-auto w-90"><!-- centramos eje X Horizontal y ocupamos el 90% de la pantalla -->
-        <form action="">
+        <form action="../controladores/landing.php" method="POST">
             <h4 class="text-center ">Cuestionario de detección de signos y síntomas</h4>
             <hr>
                 <div class="text-center">
-                    <!-- script para obtener hora y fecha -->
-                    <p class="d-inline">Fecha: </p><p id="datetime" class="d-inline btn btn-outline-info"></p>
-
+                    <!-- Etiqueta P que muestra la fecha por JS -->
+                    <p class="d-inline">Fecha: </p><p id="datetime" name="datetime" class="d-inline btn btn-info"></p>
+                    
                     <!-- Caja de texto donde escribimos y se buscan sugerencias por AJAX -->
                     <div id="content" class="col-lg-12">
-                        <input class="search_query form-control mt-3" type="text" name="key" id="key" placeholder="Ingresa tu nombre">
+                        <input class="search_query form-control mt-3" onkeyup="success()"  type="text" name="key" id="key" placeholder="Ingresa tu nombre">
                         <div id="suggestions">
                             <!-- Aqui se generan automaticamente las sugerencias por JS -->
                         </div>
                     </div>
 
                     <!-- Textbox confirmacion de los datos del usuario seleccionado -->
-                    <input type="text" class="btn btn-outline-success mb-1 btn-sm w-75" id="labelKey" placeholder="" disabled>
-                    <input type="text" class="btn btn-outline-success mb-1 btn-sm w-75" id="labelDepto" placeholder="" disabled>
-                    <input type="text" class="btn btn-primary mb-1 btn-sm w-75" id="labelEmpresa" placeholder="" disabled>
+                    <input type="text" class="btn btn-primary mb-1 btn-sm w-75" id="labelKey" name="puesto" placeholder="" readonly>
+                    <input type="text" class="btn btn-primary mb-1 btn-sm w-75" id="labelDepto" name="depto" placeholder="" readonly>
+                    <input type="text" class="btn btn-primary mb-1 btn-sm w-75" id="labelEmpresa" name="empresa" placeholder="" readonly>
 
                     <hr>
                     <!-- Cuestionario 1 -->
                     <p>¿En los últimos 7 días , has tenido  alguno de los siguientes síntomas? Puedes marcar varias casillas:</p>
                     <div class="text-left ml-5 form-check">
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Fiebre</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Tos</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Estornudos</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Dolor de cabeza</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Diarrea</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Vomito</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Calosfrios</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Dolor abdominal</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Malestar general</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Dificultad para respirar</label><br>
+                        <input type="checkbox" name="fiebre" id=""><label for="" class="ml-3 h6 mb-3">Fiebre</label><br>
+                        <input type="checkbox" name="tos" id=""><label for="" class="ml-3 h6 mb-3">Tos</label><br>
+                        <input type="checkbox" name="estornudos" id=""><label for="" class="ml-3 h6 mb-3">Estornudos</label><br>
+                        <input type="checkbox" name="dcabeza" id=""><label for="" class="ml-3 h6 mb-3">Dolor de cabeza</label><br>
+                        <input type="checkbox" name="diarrea" id=""><label for="" class="ml-3 h6 mb-3">Diarrea</label><br>
+                        <input type="checkbox" name="vomito" id=""><label for="" class="ml-3 h6 mb-3">Vomito</label><br>
+                        <input type="checkbox" name="calosfrios" id=""><label for="" class="ml-3 h6 mb-3">Calosfrios</label><br>
+                        <input type="checkbox" name="dabdominal" id=""><label for="" class="ml-3 h6 mb-3">Dolor abdominal</label><br>
+                        <input type="checkbox" name="mgeneral" id=""><label for="" class="ml-3 h6 mb-3">Malestar general</label><br>
+                        <input type="checkbox" name="drespirar" id=""><label for="" class="ml-3 h6 mb-3">Dificultad para respirar</label><br>
                     </div>
-                    <input type="button" value="Siguiente" class="btn btn-success mb-3 mt-3 w-50">                  
+
+                    <!-- Boton siguiente, tiene un JS para desabilitarlo hasta escribir en el campo Key -->
+                    <input type="submit" value="Siguiente" id="button" class="btn btn-success mb-3 mt-3 w-50" disabled>                  
                 </div>
         </form>
     <div><!-- FIN centramos eje X Horizontal y ocupamos el 90% de la pantalla -->
 </body>
 
-    <!-- Script JS para obtener la hora y colocarla al inicio. -->
+    <!-- Script Section-->
     <script>
+
+     /* Este escript nos da la fecha y la ponemos en P */   
     var dt = new Date();
     document.getElementById("datetime").innerHTML = dt.toLocaleString();
+
+    /* Esto limpia el textbox key en caso de que den para atras */
+    window.onload = function(){
+    document.getElementById("key").value = "";
+    }
+
+    /* Funcion para activar el boton Siguiente al escribir en el campo Key */
+    function success() {
+	 if(document.getElementById("key").value==="") { 
+            document.getElementById('button').disabled = true; 
+        } else { 
+            document.getElementById('button').disabled = false;
+        }
+    }
     </script>
 
 <!-- Script JS para buscar sugerencias, rellenar los textbox desde PHP / MYSQL -->
-<script>
-    $(document).ready(function() {
-        $('#key').on('keyup', function() {
-            var key = $(this).val();		
-            var dataString = 'key='+key;
-        $.ajax({
-                type: "POST",
-                url: "ajax.php",
-                data: dataString,
-                success: function(data) {
-                    //Rellenamos la lista de sugerencias con el result del Qry
-                    $('#suggestions').fadeIn(1000).html(data);
-                    //Al hacer click en alguna de las sugerencias
-                    $('.suggest-element').on('click', function(){
-                            //Obtenemos la id unica de la sugerencia seleccionada
-                            var id = $(this).attr('id');
-                            //Rellenamos el textbox con data="" de la sugerencia seleccionada
-                            $('#key').val($('#'+id).attr('data'));
-                            $('#labelKey').val($('#'+id).attr('data2'));
-                            $('#labelDepto').val($('#'+id).attr('data3'));
-                            $('#labelEmpresa').val($('#'+id).attr('data4'));
-                            //Limpiamos la lista de sugerencias
-                            $('#suggestions').fadeOut(1000);
-                            /* Mandamos un alert solo para comprobar */
-                            /* alert('Has seleccionado el ID: '+id+' con Serial: '+$('#'+id).attr('data')); */
-                            return false;
-                    });
-                }
+    <script>
+        $(document).ready(function() {
+            $('#key').on('keyup', function() {
+                var key = $(this).val();		
+                var dataString = 'key='+key;
+            $.ajax({
+                    type: "POST",
+                    url: "../vistas/ajax.php",
+                    data: dataString,
+                    success: function(data) {
+                        //Rellenamos la lista de sugerencias con el result del Qry
+                        $('#suggestions').fadeIn(1000).html(data);
+                        //Al hacer click en alguna de las sugerencias
+                        $('.suggest-element').on('click', function(){
+                                //Obtenemos la id unica de la sugerencia seleccionada
+                                var id = $(this).attr('id');
+                                //Rellenamos el textbox con data="" de la sugerencia seleccionada
+                                $('#key').val($('#'+id).attr('data'));
+                                $('#labelKey').val($('#'+id).attr('data2'));
+                                $('#labelDepto').val($('#'+id).attr('data3'));
+                                $('#labelEmpresa').val($('#'+id).attr('data4'));
+                                //Limpiamos la lista de sugerencias
+                                $('#suggestions').fadeOut(1000);
+                                /* Mandamos un alert solo para comprobar */
+                                /* alert('Has seleccionado el ID: '+id+' con Serial: '+$('#'+id).attr('data')); */
+                                return false;
+                        });
+                    }
+                });
             });
-        });
-    }); 
+        }); 
     </script>
     
 </html>

@@ -8,19 +8,20 @@
 </head>
 <body>
     <div class="mx-3 w-85 mt-3 text-center">
-        <form action="">
+        <form action="../controladores/factores.php" method="POST">
         <p>¿Padeces alguna de éstas enfermedades?</p>
                     <div class="text-left ml-1 form-check">
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Diabetes</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Presion Alta</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Enfermedades del corazón</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Enfermedad Renal</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Enfermedades pulmonares crónicas</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Cáncer</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">Inmunocompromiso</label><br>
-                        <input type="checkbox" name="" id=""><label for="" class="ml-3 h6 mb-3">VIH</label><br>
+                        <input type="hidden" name="hidden">
+                        <input type="checkbox" name="diabetes" id=""><label for="" class="ml-3 h6 mb-3">Diabetes</label><br>
+                        <input type="checkbox" name="palta" id=""><label for="" class="ml-3 h6 mb-3">Presion Alta</label><br>
+                        <input type="checkbox" name="ecorazon" id=""><label for="" class="ml-3 h6 mb-3">Enfermedades del corazón</label><br>
+                        <input type="checkbox" name="erenal" id=""><label for="" class="ml-3 h6 mb-3">Enfermedad Renal</label><br>
+                        <input type="checkbox" name="epulmonar" id=""><label for="" class="ml-3 h6 mb-3">Enfermedades pulmonares crónicas</label><br>
+                        <input type="checkbox" name="cancer" id=""><label for="" class="ml-3 h6 mb-3">Cáncer</label><br>
+                        <input type="checkbox" name="inmuno" id=""><label for="" class="ml-3 h6 mb-3">Inmunocompromiso</label><br>
+                        <input type="checkbox" name="vih" id=""><label for="" class="ml-3 h6 mb-3">VIH</label><br>
                     </div>
-                    <input type="button" value="Enviar" class="btn btn-success mb-3 mt-3 w-50">
+                    <input type="submit" value="Enviar" class="btn btn-success mb-3 mt-3 w-50">
     </form>
     </div>
 
