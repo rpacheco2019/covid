@@ -61,8 +61,39 @@ if($_POST){
         $vih = "No tiene VIH";
     }
 
-    $estatus = "RIESGO" ;
+    //librerias
+    require '../PHPMailer/PHPMailerAutoload.php';
 
+    //Create a new PHPMailer instance
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    
+    //Configuracion servidor mail
+    $mail->From = "sysalert@planner1events.com"; //remitente
+    $mail->FromName = "Alerta Covid"; //remitente Nombre
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'SSL'; //seguridad
+    $mail->Host = "diablo.websitewelcome.com"; // servidor smtp
+    $mail->Port = 587; //puerto
+    $mail->Username ='sysalert@planner1events.com'; //nombre usuario
+    $mail->Password = 'sysalert.2020'; //contraseña
+    
+    //Agregar destinatario
+    $mail->AddAddress("jsierra@planner1events.com");
+    $mail->AddAddress("jesquivel@planner1events.com"); 
+    $mail->AddAddress("rpacheco.inbox@gmail.com");
+    $mail->Subject = "Se ha detectado una encuesta en Riesgo";
+    $mail->Body = "Se ha registrado una encuesta con sintomas de Covid. \n";
+    $mail->Body .= "Nombre: ".$_SESSION['nombre']."\n";
+    $mail->Body .= "Departamento: ".$_SESSION['depto']."\n";
+    $mail->Body .= "Empresa: ".$_SESSION['empresa']."\n \n";
+    $mail->Body .= "Revise el sistema de registros para mas info. http://survey.planner1events.com/devops/covid/controladores/report.php";
+
+    //Enviar correo
+    $mail->Send();
+
+    //Guardamos en la base de datos
+    $estatus = "RIESGO" ;
     saveNormal($_SESSION['nombre'],$_SESSION['puesto'],$_SESSION['depto'],$_SESSION['empresa'],$_SESSION['fiebre'],$_SESSION['tos'],$_SESSION['estornudos'],$_SESSION['dcabeza'],$_SESSION['diarrea'],$_SESSION['vomito'],$_SESSION['calosfrios'],$_SESSION['dabdominal'],$_SESSION['mgeneral'],$_SESSION['drespirar'],$diabetes,$palta,$ecorazon,$erenal,$epulmonar,$cancer,$inmuno,$vih,$estatus);
     header('Location:covid.php');
 
