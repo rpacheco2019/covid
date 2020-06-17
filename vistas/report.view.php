@@ -30,22 +30,22 @@
 </head>
 <body>
     
-    <div class="text-center w-100 pr-5 pl-5">
+    <!-- <div class="container pt-3"> -->
+        <div class="mx-auto" style="width: 85%;">
         <h3>Registros de encuesta COVID-19 GP1</h3>
-        <div class="text-center mt-4">
-            <!-- <p class="btn btn-success w-25 mx-3">OK</p>
-            <p class="btn btn-warning w-25 mx-3">SINTOMAS</p>
-            <p class="btn btn-danger w-25 mx-3">ALERTA</p> -->
+        <p>Estos datos son actualizados automaticamente. Se muestra el registro más actual primero.</p>
+        <div class=" mt-4">
 
         <!-- Prueba de Tabla autogenerada por MYSQL -->
-        <table class="table" id="table1">
+        <table class="table text-left" id="table1">
 				<thead class="thead thead-dark">
 					<tr>
                         <th>ID</th>
+                        <th>Estatus</th>
                         <th>Fecha</th>
 						<th>Nombre</th>
-						<th>Depto</th>
-						<th>Puesto</th>
+						<th>Departamento</th>
+						<th hidden>Puesto</th>
                         <th>Empresa</th>
                         <th hidden>Fiebre</th>
                         <th hidden>Tos</th>
@@ -65,7 +65,6 @@
                         <th hidden>Cancer</th>
                         <th hidden>Inmuno</th>
                         <th hidden>VIH</th>
-                        <th>Estatus</th>
 					</tr>
                 </thead>
 
@@ -73,11 +72,19 @@
                 <?php //Construcción de tabla desde get_allitems - Archivo de funciones devuelve $datos	que pasamos a $resultados
                             foreach ($resultados as $fila) {
                                 echo "<tr>";
-                                    echo '<td><a href="historial.php?id='.$fila['id'].'">'.$fila['id'].'</a></td>';
+                                    echo '<td><a href="../controladores/detalleRegistro.php?id='.$fila['id'].'">'.$fila['id'].'</a></td>';
+                                    /* Clase segun estatus */
+                                    if($fila['estatus'] == "NORMAL"){
+                                        echo "<td class='btn btn-success btn-sm' style='width: 110px'>".$fila['estatus']."</td>";
+                                    }else if($fila['estatus'] == "ENFERMO"){
+                                        echo "<td class='btn btn-info btn-sm' style='width: 110px'>".$fila['estatus']."</td>";
+                                    }else{
+                                        echo "<td class='btn btn-danger btn-sm' style='width: 110px'>".$fila['estatus']."</td>";
+                                    }
                                     echo "<td>".$fila['stamp']."</td>";
                                     echo "<td>".$fila['empleado']."</td>";
                                     echo "<td>".$fila['depto']."</td>";
-                                    echo "<td>".$fila['puesto']."</td>";
+                                    echo "<td hidden>".$fila['puesto']."</td>";
                                     echo "<td>".$fila['empresa']."</td>";
                                     echo "<td hidden>".$fila['fiebre']."</td>";
                                     echo "<td hidden>".$fila['tos']."</td>";
@@ -97,14 +104,6 @@
                                     echo "<td hidden>".$fila['cancer']."</td>";
                                     echo "<td hidden>".$fila['inmuno']."</td>";
                                     echo "<td hidden>".$fila['vih']."</td>";
-                                    /* Clase segun estatus */
-                                    if($fila['estatus'] == "NORMAL"){
-                                        echo "<td class='btn btn-success btn-sm'>".$fila['estatus']."</td>";
-                                    }else if($fila['estatus'] == "ENFERMO"){
-                                        echo "<td class='btn btn-info btn-sm'>".$fila['estatus']."</td>";
-                                    }else{
-                                        echo "<td class='btn btn-danger btn-sm'>".$fila['estatus']."</td>";
-                                    }
                                 echo "</tr>";	
                             }//fin del foreach
                 ?>	<!-- Fin de la ejecucion en PHP -->
@@ -120,7 +119,7 @@
 			$(document).ready(function() {
 			    $('#table1').DataTable( {
 			        dom: 'Bfrtip',
-                    order: [[ 1, "desc" ]],
+                    order: [[ 2, "desc" ]],
                     pageLength : 15,
 				    buttons: ['copy', 'csv', 'excel']
 	   				} 
