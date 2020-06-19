@@ -99,7 +99,11 @@ if($_POST){
 
 }else{
         /* Si no es POST mostramos el formulario */
-        require("../vistas/factores.view.html");
+            if(isset($_SESSION['nombre'])){
+                require("../vistas/factores.view.html");
+            }else{
+                header('Location:landing.php');
+            }
     }
 
 ?>
