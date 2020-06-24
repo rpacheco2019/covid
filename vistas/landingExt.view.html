@@ -1,0 +1,98 @@
+<!-- Este es el View para recabar la encuesta de proveedores -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Encuesta Externa</title>
+</head>
+<body>
+    <!-- Formulario principal del primer cuestionario -->
+    <div class="mx-auto w-90"><!-- centramos eje X Horizontal y ocupamos el 90% de la pantalla -->
+        <form action="../controladores/landingExt.php" method="POST">
+            <div class="text-center">
+                <h4 class="text-center pt-1">Cuestionario de detección de signos y síntomas.</h4>
+                <a href="landing.php" class="">Ir a Encuesta Trabajadores</a>
+            </div>
+
+            <hr>
+                <div class="text-center">
+                    <!-- Etiqueta P que muestra la fecha por JS -->
+                    <p class="d-inline">Fecha: </p><p id="datetime" name="datetime" class="d-inline btn btn-info"></p>
+                    
+                    <!-- Caja de texto donde escribimos y se buscan sugerencias por AJAX -->
+                    <div id="content" class="col-lg-12">
+                        <input class="form-control mt-3" onkeyup="success()"  type="text" name="key" id="key" placeholder="Ingrese su nombre y apellidos.." autocomplete="off">
+                        
+                        <label for="tipoExterno" class="mt-3">Tipo de externo:</label>
+                        <select class="form-control" name="tipoExterno" id="tipoExterno">
+                            <option value="Cliente">Cliente</option>
+                            <option value="Proveedor">Proveedor</option>
+                            <option value="Visitante">Visitante</option>
+                        </select>
+
+                        <label for="deptoVisitado" class="mt-3">Departamento que visita:</label>
+                        <select class="form-control" name="deptoVisitado" id="deptoVisitado">
+                            <option value="Administracion">Administración</option>
+                            <option value="Almacen">Almacen</option>
+                            <option value="Bodega">Bodega</option>
+                            <option value="Cristaleria">Cristaleria</option>
+                            <option value="CH">CH</option>
+                            <option value="Dirección">Dirección</option>
+                            <option value="Flores">Flores</option>
+                            <option value="Planeación">Planeación</option>
+                            <option value="Operaciones">Operaciones</option>
+                            <option value="Logistica">Logistica</option>
+                            <option value="Ventas">Ventas</option>
+                        </select>
+                    </div>
+
+                    <hr>
+                    <!-- Cuestionario 1 -->
+                    <p>¿En los últimos 7 días , has tenido  alguno de los siguientes síntomas? Puedes marcar varias casillas:</p>
+                    <div class="text-left ml-5 form-check">
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="fiebre" id="fiebre"><label for="fiebre" class="ml-3 h5 mb-3">Fiebre</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="tos" id="tos"><label for="tos" class="ml-3 h5 mb-3">Tos</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="estornudos" id="estornudos"><label for="estornudos" class="ml-3 h5 mb-3">Estornudos</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="dcabeza" id="dcabeza"><label for="dcabeza" class="ml-3 h5 mb-3">Dolor de cabeza</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="diarrea" id="diarrea"><label for="diarrea" class="ml-3 h5 mb-3">Diarrea</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="vomito" id="vomito"><label for="vomito" class="ml-3 h5 mb-3">Vomito</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="calosfrios" id="calosfrios"><label for="calosfrios" class="ml-3 h5 mb-3">Calosfrios</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="dabdominal" id="dabdominal"><label for="dabdominal" class="ml-3 h5 mb-3">Dolor abdominal</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="mgeneral" id="mgeneral"><label for="mgeneral" class="ml-3 h5 mb-3">Malestar general</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="drespirar" id="drespirar"><label for="drespirar" class="ml-3 h5 mb-3">Dificultad para respirar</label><br>
+                        <input type="checkbox" style="height: 20px; width: 20px;" name="NA" id="NA"><label for="NA" class="ml-3 h5 mb-3">N/A</label><br>
+                    </div>
+
+                    <!-- Boton siguiente, tiene un JS para desabilitarlo hasta escribir en el campo Key -->
+                    <input type="submit" value="Siguiente" id="button" class="btn btn-success mb-3 mt-3 w-50" disabled>                  
+                </div>
+        </form>
+    <div><!-- FIN centramos eje X Horizontal y ocupamos el 90% de la pantalla -->
+</body>
+
+    <!-- Script Section-->
+    <script>
+
+     /* Este escript nos da la fecha y la ponemos en P */   
+    var dt = new Date();
+    document.getElementById("datetime").innerHTML = dt.toLocaleString();
+
+    /* Esto limpia el textbox key en caso de que den para atras */
+    window.onload = function(){
+    document.getElementById("key").value = "";
+    }
+
+    /* Funcion para activar el boton Siguiente al escribir en el campo Key */
+    function success() {
+	 if(document.getElementById("key").value==="") { 
+            document.getElementById('button').disabled = true; 
+        } else { 
+            document.getElementById('button').disabled = false;
+        }
+    }
+    </script>
+
+    
+</html>

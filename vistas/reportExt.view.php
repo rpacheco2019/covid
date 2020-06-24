@@ -1,3 +1,4 @@
+<!-- Esta es la vista Reporte de registros Externos / 23 de Junio 2020 -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,15 +27,15 @@
 	<!-- Fin de carga de librerias -->
 
     
-    <title>Reporte GP1</title>
+    <title>Reporte GP1 Ext.</title>
 </head>
 <body>
     
     <!-- <div class="container pt-3"> -->
-        <div class="mx-auto" style="width: 85%;">
-        <h3>Registros de encuesta COVID-19 GP1</h3>
+        <div class="mx-auto" style="width: 75%;">
+        <h3>Registros de encuesta COVID-19 Externos (Clientes, Proveedores, Visitantes)</h3>
         <p>Estos datos son actualizados automaticamente. Se muestra el registro más actual primero.</p>
-        <a href="reportExt.php" class="btn btn-primary">Ver reporte Externos</a>
+        <a href="report.php" class="btn btn-primary">Ver reporte Trabajadores</a>
         <div class=" mt-4">
 
         <!-- Prueba de Tabla autogenerada por MYSQL -->
@@ -45,9 +46,8 @@
                         <th>Estatus</th>
                         <th>Fecha</th>
 						<th>Nombre</th>
-						<th>Departamento</th>
-						<th hidden>Puesto</th>
-                        <th>Empresa</th>
+						<th>Tipo Externo</th>
+                        <th>Depto. Visitado</th>
                         <th hidden>Fiebre</th>
                         <th hidden>Tos</th>
                         <th hidden>Estornudos</th>
@@ -58,14 +58,6 @@
                         <th hidden>D. Abdominal</th>
                         <th hidden>M. General</th>
                         <th hidden>Dif. Respirar</th>
-                        <th hidden>Diabetes</th>
-                        <th hidden>Presion alta</th>
-                        <th hidden>Enf. Corazón</th>
-                        <th hidden>Enf. Renal</th>
-                        <th hidden>Enf. Pulmonar</th>
-                        <th hidden>Cancer</th>
-                        <th hidden>Inmuno</th>
-                        <th hidden>VIH</th>
 					</tr>
                 </thead>
 
@@ -73,7 +65,7 @@
                 <?php //Construcción de tabla desde get_allitems - Archivo de funciones devuelve $datos	que pasamos a $resultados
                             foreach ($resultados as $fila) {
                                 echo "<tr>";
-                                    echo '<td><a href="../controladores/detalleRegistro.php?id='.$fila['id'].'">'.$fila['id'].'</a></td>';
+                                    echo '<td><a href="#">'.$fila['id'].'</a></td>';
                                     /* Clase segun estatus */
                                     if($fila['estatus'] == "NORMAL"){
                                         echo "<td class='btn btn-success btn-sm' style='width: 110px'>".$fila['estatus']."</td>";
@@ -83,10 +75,9 @@
                                         echo "<td class='btn btn-danger btn-sm' style='width: 110px'>".$fila['estatus']."</td>";
                                     }
                                     echo "<td>".$fila['stamp']."</td>";
-                                    echo "<td>".$fila['empleado']."</td>";
-                                    echo "<td>".$fila['depto']."</td>";
-                                    echo "<td hidden>".$fila['puesto']."</td>";
-                                    echo "<td>".$fila['empresa']."</td>";
+                                    echo "<td>".$fila['nombre']."</td>";
+                                    echo "<td>".$fila['tipo']."</td>";
+                                    echo "<td>".$fila['dvisitado']."</td>";
                                     echo "<td hidden>".$fila['fiebre']."</td>";
                                     echo "<td hidden>".$fila['tos']."</td>";
                                     echo "<td hidden>".$fila['estornudos']."</td>";
@@ -97,14 +88,6 @@
                                     echo "<td hidden>".$fila['dabdominal']."</td>";
                                     echo "<td hidden>".$fila['mgeneral']."</td>";
                                     echo "<td hidden>".$fila['drespirar']."</td>";
-                                    echo "<td hidden>".$fila['diabetes']."</td>";
-                                    echo "<td hidden>".$fila['palta']."</td>";
-                                    echo "<td hidden>".$fila['ecorazon']."</td>";
-                                    echo "<td hidden>".$fila['erenal']."</td>";
-                                    echo "<td hidden>".$fila['epulmonar']."</td>";
-                                    echo "<td hidden>".$fila['cancer']."</td>";
-                                    echo "<td hidden>".$fila['inmuno']."</td>";
-                                    echo "<td hidden>".$fila['vih']."</td>";
                                 echo "</tr>";	
                             }//fin del foreach
                 ?>	<!-- Fin de la ejecucion en PHP -->
