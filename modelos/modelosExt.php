@@ -7,7 +7,7 @@ function save($nombre,$tipoExterno,$deptoVisitado,$fiebre,$tos,$estornudos,$dcab
         $conn = new PDO('mysql:host=localhost;dbname=covid','root','');
         
         /* SQL Qry */
-		$statement = $conn->prepare("INSERT INTO registrosExt (nombre,tipo,dvisitado,fiebre,tos,estornudos,dcabeza,diarrea,vomito,calosfrios,dabdominal,mgeneral,drespirar,estatus)
+		$statement = $conn->prepare("INSERT INTO registrosext (nombre,tipo,dvisitado,fiebre,tos,estornudos,dcabeza,diarrea,vomito,calosfrios,dabdominal,mgeneral,drespirar,estatus)
         VALUES('$nombre','$tipoExterno','$deptoVisitado','$fiebre','$tos','$estornudos','$dcabeza','$diarrea','$vomito','$calosfrios','$dabdominal','$mgeneral','$drespirar','$estatus')");
         
         /* Execute */
@@ -25,7 +25,7 @@ function getReport(){
         $conn = new PDO('mysql:host=localhost;dbname=covid','root','');
 
          /* SQL Qry */
-		$statement = $conn->prepare("SELECT * FROM registrosExt");
+		$statement = $conn->prepare("SELECT * FROM registrosext");
 
         /* Execute */
         $statement->execute();
@@ -45,7 +45,7 @@ function getRegistro($idRegistro){
         $conn = new PDO('mysql:host=localhost;dbname=covid','root','');
         
         /* SQL Qry */
-		$statement = $conn->prepare("SELECT * FROM registrosExt WHERE id=$idRegistro");
+		$statement = $conn->prepare("SELECT * FROM registrosext WHERE id=$idRegistro");
         
         /* Execute */
         $statement->execute();
