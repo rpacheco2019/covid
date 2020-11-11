@@ -3,6 +3,6 @@
 session_start();
 session_destroy();
 
-header('Location:../vistas/nocovidExt.view.html');
+require('../vistas/nocovidExt.view.html');
 
 ?>
