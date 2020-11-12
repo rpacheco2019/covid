@@ -3,6 +3,6 @@
 session_start();
 session_destroy();
 
-header('Location:../vistas/warningExt.view.html');
+require('../vistas/warningExt.view.html');
 
 ?>

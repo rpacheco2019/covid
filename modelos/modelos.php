@@ -27,7 +27,7 @@ function getReport(){
         $conn = new PDO('mysql:host=localhost;dbname=covid','root','');
 
          /* SQL Qry */
-		$statement = $conn->prepare("SELECT * FROM registros");
+		$statement = $conn->prepare("SELECT * FROM registros ORDER BY id DESC LIMIT 500");
 
         /* Execute */
         $statement->execute();
